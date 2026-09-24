@@ -1,32 +1,39 @@
 def get_valid_input():
     item = input("Enter the item name (or type 'quit' to finish): ")
+
     if item.lower() == "quit":
         return "quit"
-    
+
     quantity_input = input(f"Enter the quantity for {item}: ")
-    
+
     if not quantity_input.isdigit():
         print("Invalid quantity. Please enter a number.")
         return None
-        
+
     quantity = int(quantity_input)
-    
+
     if quantity < 0:
         print("Quantity cannot be negative. Please enter a valid number.")
         return None
-        
-    return quantity
+
+    return item, quantity
 
 
-def process_delivery(current_total, new_value):
-    return current_total + new_value
+def process_delivery(history, item, quantity):
+    history.append([item, quantity])
+    return history
 
 
 def calculate_tax(amount):
     return amount * 0.10
 
 
-def generate_report(total_units, failed_attempts):
+def generate_report(history, failed_attempts):
+    total_units = 0
+
+    for item in history:
+        total_units += item[1]
+
     print("Total Units Processed:", total_units)
     print("Number of Failed/Rejected Entries:", failed_attempts)
 
@@ -36,41 +43,57 @@ def load_inventory():
         with open("inventory.txt", "r") as file:
             lines = file.readlines()
 
-        total = int(lines[0])
-        history = eval(lines[1])
+        if len(lines) == 0:
+            return []
 
-        return total, history
+        history = eval(lines[0])
+
+        return history
 
     except FileNotFoundError:
-        return 0, []
+        return []
+
+
+def save_inventory(history):
+    with open("inventory.txt", "w") as file:
+        file.write(str(history))
 
 
 def main():
-    inventory, history = load_inventory()
+    history = load_inventory()
     errors = 0
-    
+
     while True:
         result = get_valid_input()
-        
+
         if result == "quit":
-            generate_report(inventory, errors)
+            save_inventory(history)
+            generate_report(history, errors)
             break
-            
+
         elif result is None:
             errors += 1
             continue
-        
-        quantity = result
-        inventory = process_delivery(inventory, quantity)
-        history.append(quantity)
-        
+
+        item, quantity = result
+
+        history = process_delivery(history, item, quantity)
+
         tax = calculate_tax(quantity)
         print(f"Tax for this delivery: {tax}")
-        print("Current inventory:", inventory)
-        
-        if inventory > 500:
+
+        total_inventory = 0
+
+        for entry in history:
+            total_inventory += entry[1]
+
+        print("Current inventory:", total_inventory)
+
+        if total_inventory > 500:
             print("Inventory exceeds 500 units.")
-            generate_report(inventory, errors)
+            generate_report(history, errors)
+            save_inventory(history)
             break
+
 
 main()
