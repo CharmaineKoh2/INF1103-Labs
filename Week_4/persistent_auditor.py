@@ -10,24 +10,43 @@ def get_valid_input():
         return None
         
     quantity = int(quantity_input)
+    
     if quantity < 0:
         print("Quantity cannot be negative. Please enter a valid number.")
         return None
         
     return quantity
 
+
 def process_delivery(current_total, new_value):
     return current_total + new_value
 
+
 def calculate_tax(amount):
     return amount * 0.10
+
 
 def generate_report(total_units, failed_attempts):
     print("Total Units Processed:", total_units)
     print("Number of Failed/Rejected Entries:", failed_attempts)
 
+
+def load_inventory():
+    try:
+        with open("inventory.txt", "r") as file:
+            lines = file.readlines()
+
+        total = int(lines[0])
+        history = eval(lines[1])
+
+        return total, history
+
+    except FileNotFoundError:
+        return 0, []
+
+
 def main():
-    inventory = 0
+    inventory, history = load_inventory()
     errors = 0
     
     while True:
@@ -36,12 +55,14 @@ def main():
         if result == "quit":
             generate_report(inventory, errors)
             break
+            
         elif result is None:
             errors += 1
             continue
         
         quantity = result
         inventory = process_delivery(inventory, quantity)
+        history.append(quantity)
         
         tax = calculate_tax(quantity)
         print(f"Tax for this delivery: {tax}")
