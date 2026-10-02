@@ -1,3 +1,5 @@
+import json
+
 def add_product(inventory):
     print("\nAdd New Product")
 
@@ -30,10 +32,19 @@ def display_all(inventory):
         )
     print("------------------------------------------------")
 
+def load_inventory():
+    try:
+        with open("inventory.json", "r") as file:
+            inventory = json.load(file)
+        return inventory
+    except FileNotFoundError:
+        with open("inventory.json", "w") as file:
+            json.dump({}, file)
+        return {}
 
 def main():
 
-    inventory = {}
+    inventory = load_inventory()
 
     inventory = add_product(inventory)
     inventory = add_product(inventory)
