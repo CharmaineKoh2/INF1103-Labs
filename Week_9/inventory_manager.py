@@ -71,7 +71,6 @@ class PhysicalProduct(Product, CanBeShipped):
             "weight": self.__weight
         }
 
-# Digital Product Subclass
 class DigitalProduct(Product):
     def __init__(self, product_id, name, price, stock, download_size):
         super().__init__(product_id, name, price, stock)
@@ -97,7 +96,6 @@ class DigitalProduct(Product):
             "download_size": self.__download_size
         }
 
-# Inventory Manager Class
 class Inventory:
     def __init__(self):
         self.__products = []
@@ -135,7 +133,6 @@ class Inventory:
     def get_products(self):
         return self.__products
 
-# CLI Functions
 def add_product(inventory):
     print("\nAdd New Product")
     product_id = input("Product ID: ")
@@ -265,7 +262,6 @@ def save_inventory(inventory):
     print("\nSaving inventory...")
     print("Inventory saved successfully to inventory.json.")
 
-# Main Loop
 def main():
     inventory = load_inventory()
 

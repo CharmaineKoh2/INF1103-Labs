@@ -1,0 +1,16 @@
+{
+    "P100": {
+        "type": "physical",
+        "name": "Keyboard",
+        "price": 50.0,
+        "stock": 20,
+        "weight": 1.2
+    },
+    "D100": {
+        "type": "digital",
+        "name": "E-paper",
+        "price": 13.0,
+        "stock": 29,
+        "download_size": 45.0
+    }
+}

@@ -23,10 +23,6 @@ while True:
         errors += 1
         continue
 
-    if inventory > 500:
-            print("Inventory exceeds 500 units.")
-            break
-
     inventory += quantity
 
     print("Current inventory:", inventory)
