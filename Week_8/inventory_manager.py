@@ -103,17 +103,7 @@ def add_product(inventory):
         print("\nProduct added successfully!")
 
 def display_all(inventory):
-    print("\nCurrent Inventory")
-    print("------------------------------------------------")
-
-    for product_id, product in inventory.items():
-        print(
-            f"ID: {product_id} | "
-            f"Name: {product['name']} | "
-            f"Price: ${product['price']:.2f} | "
-            f"Stock: {product['stock']}"
-        )
-    print("------------------------------------------------")
+    inventory.display_all()
 
 def update_stock(inventory):
     print("\nUpdate Stock")
