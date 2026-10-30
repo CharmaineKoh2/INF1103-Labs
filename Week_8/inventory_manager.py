@@ -102,6 +102,19 @@ def add_product(inventory):
     if inventory.add_product(product):
         print("\nProduct added successfully!")
 
+def display_all(inventory):
+    print("\nCurrent Inventory")
+    print("------------------------------------------------")
+
+    for product_id, product in inventory.items():
+        print(
+            f"ID: {product_id} | "
+            f"Name: {product['name']} | "
+            f"Price: ${product['price']:.2f} | "
+            f"Stock: {product['stock']}"
+        )
+    print("------------------------------------------------")
+
 def update_stock(inventory):
     print("\nUpdate Stock")
 
@@ -177,6 +190,7 @@ def save_inventory(inventory):
     print("\nSaving inventory...")
     print("Inventory saved successfully to inventory.json.")
 
+
 def main():
 
     inventory = load_inventory()
@@ -184,17 +198,17 @@ def main():
     print("\n===========================")
     print("INVENTORY MANAGEMENT SYSTEM")
     print("===========================")
-    
-    print("\n----------- MENU -----------")
-    print("1. Display All Products")
-    print("2. Add Product")
-    print("3. Update Stock")
-    print("4. Search Product")
-    print("5. Save Inventory")
-    print("6. Exit")
-    print("----------------------------")
 
     while True:
+
+        print("\n----------- MENU -----------")
+        print("1. Display All Products")
+        print("2. Add Product")
+        print("3. Update Stock")
+        print("4. Search Product")
+        print("5. Save Inventory")
+        print("6. Exit")
+        print("----------------------------")
 
         option = input("\nEnter option: ")
 
@@ -202,10 +216,10 @@ def main():
             display_all(inventory)
 
         elif option == "2":
-            inventory = add_product(inventory)
+            add_product(inventory)
 
         elif option == "3":
-            inventory = update_stock(inventory)
+            update_stock(inventory)
 
         elif option == "4":
             search_product(inventory)
@@ -225,4 +239,5 @@ def main():
             print("\nInvalid option. Please enter 1-6.")
 
 
-main()
+if __name__ == "__main__":
+    main()
