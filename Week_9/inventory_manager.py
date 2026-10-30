@@ -37,6 +37,53 @@ class Product(ABC):
     def to_dict(self):
         pass
 
+class PhysicalProduct(Product):
+    def __init__(self, product_id, name, price, stock, weight):
+        super().__init__(product_id, name, price, stock)
+        self.__weight = weight
+
+    def get_weight(self):
+        return self.__weight
+
+    def display_information(self):
+        base_info = super().display_information()
+        print(f"{base_info} | Type: Physical | Weight: {self.__weight}kg")
+
+    def get_fulfilment_info(self): # Implemented abstract method
+        return "This product requires physical shipping via courier."
+
+    def to_dict(self):
+        return {
+            "type": "physical",
+            "name": self.get_name(),
+            "price": self.get_price(),
+            "stock": self.get_stock(),
+            "weight": self.__weight
+        }
+
+class DigitalProduct(Product):
+    def __init__(self, product_id, name, price, stock, download_size):
+        super().__init__(product_id, name, price, stock)
+        self.__download_size = download_size
+
+    def get_download_size(self):
+        return self.__download_size
+
+    def display_information(self):
+        base_info = super().display_information()
+        print(f"{base_info} | Type: Digital | Download Size: {self.__download_size}MB")
+
+    def get_fulfilment_info(self): # Implemented abstract method
+        return "This product is delivered digitally via a secure download link."
+
+    def to_dict(self):
+        return {
+            "type": "digital",
+            "name": self.get_name(),
+            "price": self.get_price(),
+            "stock": self.get_stock(),
+            "download_size": self.__download_size
+        }
 class Inventory:
 
     def __init__(self):
@@ -80,6 +127,54 @@ class Inventory:
 
     def get_products(self):
         return self.__products
+
+class PhysicalProduct(Product):
+    def __init__(self, product_id, name, price, stock, weight):
+        super().__init__(product_id, name, price, stock)
+        self.__weight = weight
+
+    def get_weight(self):
+        return self.__weight
+
+    def display_information(self):
+        base_info = super().display_information()
+        print(f"{base_info} | Type: Physical | Weight: {self.__weight}kg")
+
+    def get_fulfilment_info(self):
+        return "This product requires physical shipping via courier."
+
+    def to_dict(self):
+        return {
+            "type": "physical",
+            "name": self.get_name(),
+            "price": self.get_price(),
+            "stock": self.get_stock(),
+            "weight": self.__weight
+        }
+
+class DigitalProduct(Product):
+    def __init__(self, product_id, name, price, stock, download_size):
+        super().__init__(product_id, name, price, stock)
+        self.__download_size = download_size
+
+    def get_download_size(self):
+        return self.__download_size
+
+    def display_information(self):
+        base_info = super().display_information()
+        print(f"{base_info} | Type: Digital | Download Size: {self.__download_size}MB")
+
+    def get_fulfilment_info(self):
+        return "This product is delivered digitally via a secure download link."
+
+    def to_dict(self):
+        return {
+            "type": "digital",
+            "name": self.get_name(),
+            "price": self.get_price(),
+            "stock": self.get_stock(),
+            "download_size": self.__download_size
+        }
 
 def add_product(inventory):
     print("\nAdd New Product")
